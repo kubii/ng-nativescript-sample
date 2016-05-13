@@ -76,3 +76,5 @@ A custom Component and Directive decorator is implemented in app/util/Component.
 <h2>5. References</h2>
 
 http://angularjs.blogspot.hu/2016/03/code-reuse-in-angular-2-native-mobile.html
+
+Basic structure is based on https://github.com/NativeScript/sample-Groceries
