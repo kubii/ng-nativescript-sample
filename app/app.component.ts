@@ -10,6 +10,7 @@ import {LoginService} from './services/login.service';
     directives: [RouteDirective],
     providers: [RouteProviders, LoginService],
     templateUrl: 'app',
+    styleUrls: ['app']
 })
 @RouteConfig([
     { path: '/Login', component: Login, name: 'Login', useAsDefault: true },
