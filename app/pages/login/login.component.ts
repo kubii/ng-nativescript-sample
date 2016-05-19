@@ -1,6 +1,6 @@
 import {Component} from '../../util/Component';
-import {RouteDirective, RouteProviders, Router} from '../../util/route';
 import {LoginService} from '../../services/login.service';
+import {Router} from '../../app.metadata';
 
 import {PlatformMetadata} from './login.metadata';
 

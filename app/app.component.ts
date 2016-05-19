@@ -2,15 +2,13 @@ import {Component} from './util/Component';
 import {RouteConfig} from "@angular/router-deprecated";
 import {Login} from './pages/login/login.component';
 import {Start} from './pages/start/start.component';
-import {RouteDirective, RouteProviders, Router} from './util/route';
 import {LoginService} from './services/login.service';
 
-import {PlatformMetadata} from './app.metadata'; 
+import {PlatformMetadata, Router} from './app.metadata'; 
 
 @Component({
     selector: "my-app",
-    directives: [RouteDirective],
-    providers: [RouteProviders, LoginService]
+    providers: [LoginService]
 }, PlatformMetadata)
 @RouteConfig([
     { path: '/Login', component: Login, name: 'Login', useAsDefault: true },

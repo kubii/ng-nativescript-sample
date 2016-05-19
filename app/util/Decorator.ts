@@ -1,7 +1,6 @@
 import {Component, Directive} from '@angular/core';
 import {CoreConfig, Platform} from '../core.config';
 import {Metadata, PlatformMetadata} from './Component';
-import {Url} from './url';
 
 const _reflect: any = Reflect;
 let noop = () => { };
