@@ -15,7 +15,8 @@
       defaultExtension: 'js',
       map: {
         './util/url': './util/url.web.js',
-        './util/route': './util/route.web.js'
+        './util/route': './util/route.web.js',
+        './util/camera': './util/camera.web.js'
       } 
     },
     'rxjs':                       { defaultExtension: 'js' },
