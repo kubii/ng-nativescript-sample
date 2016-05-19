@@ -2,13 +2,11 @@ import {Component} from '../../util/Component';
 import {RouteDirective, RouteProviders, Router} from '../../util/route';
 import {LoginService} from '../../services/login.service';
 
+import {PlatformMetadata} from './login.metadata';
+
 @Component({
-    selector: 'my-login',
-    platform: {
-        templateUrl: 'pages/login/login',
-        styleUrls: ['pages/login/login']
-    }
-})
+    selector: 'my-login'
+}, PlatformMetadata)
 export class Login {
     public name: string;
     public password: string;

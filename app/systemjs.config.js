@@ -16,7 +16,10 @@
       map: {
         './util/url': './util/url.web.js',
         './util/route': './util/route.web.js',
-        './util/camera': './util/camera.web.js'
+        './util/camera': './util/camera.web.js',
+        './app.metadata': './app.metadata.web.js',
+        './pages/login/login.metadata': './pages/login/login.metadata.web',
+        './pages/start/start.metadata': './pages/start/start.metadata.web'
       } 
     },
     'rxjs':                       { defaultExtension: 'js' },
