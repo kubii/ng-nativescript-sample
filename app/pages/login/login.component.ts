@@ -4,8 +4,10 @@ import {LoginService} from '../../services/login.service';
 
 @Component({
     selector: 'my-login',
-    templateUrl: 'pages/login/login',
-    styleUrls: ["pages/login/login"]
+    platform: {
+        templateUrl: 'pages/login/login',
+        styleUrls: ['pages/login/login']
+    }
 })
 export class Login {
     public name: string;

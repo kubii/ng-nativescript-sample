@@ -1,15 +1,32 @@
 import {Component, Directive} from '@angular/core';
 import {CoreConfig, Platform} from '../core.config';
+import {Metadata} from './Component';
 import {Url} from './url';
 
 const _reflect: any = Reflect;
+let noop = () => { };
 
 export class Decorator {
-    public static getMetadata(metadata: any = {}, customDecoratorMetadata?: any) {
-        if (metadata.templateUrl)
-            metadata.templateUrl = Url.fixTemplateUrl(metadata.templateUrl);
-        if (metadata.styleUrls)
-            metadata.styleUrls = Url.fixStyleUrls(metadata.styleUrls);
+    public static getMetadata(metadata: Metadata = {}, customDecoratorMetadata?: any) {
+        var platform = metadata.platform || {};
+        
+        if (platform.templateUrl)
+            metadata.templateUrl = Url.fixTemplateUrl(platform.templateUrl);
+            
+        if (platform.styleUrls) {
+            metadata.styleUrls = metadata.styleUrls || [];
+            metadata.styleUrls = metadata.styleUrls.concat(Url.fixStyleUrls(platform.styleUrls));
+        }
+        
+        if (platform.directives) {
+            metadata.directives = metadata.directives || [];
+            metadata.directives = metadata.directives.concat(platform.directives);
+        }
+        
+        if (platform.providers) {
+            metadata.providers = metadata.providers || [];
+            metadata.providers = metadata.providers.concat(platform.providers);
+        }
 
         return metadata;
     }

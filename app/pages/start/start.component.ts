@@ -3,8 +3,10 @@ import {LoginService} from '../../services/login.service';
 
 @Component({
     selector: 'my-start',
-    templateUrl: 'pages/start/start',
-    styleUrls: ["pages/start/start"]
+    platform: {
+        templateUrl: 'pages/start/start',
+        styleUrls: ['pages/start/start']
+    }
 })
 export class Start {
     public count = 1;

@@ -1,7 +1,14 @@
 import {Decorator} from './Decorator';
 import {ChangeDetectionStrategy, Type, ViewEncapsulation} from '@angular/core';
 
-interface CustomComponentDecorator {
+interface PlatformProperties {
+    providers?: any[],
+    templateUrl?: string;
+    styleUrls?: string[];
+    directives?: Array<Type | any[]>;
+}
+
+export interface PlatformComponentDecorator {
     selector?: string;
     inputs?: string[];
     outputs?: string[];
@@ -27,9 +34,10 @@ interface CustomComponentDecorator {
     directives?: Array<Type | any[]>;
     pipes?: Array<Type | any[]>;
     encapsulation?: ViewEncapsulation;
+    platform?: PlatformProperties;
 }
 
-interface CustomDirectiveDecorator {
+export interface PlatformDirectiveDecorator {
     selector?: string;
     inputs?: string[];
     outputs?: string[];
@@ -39,20 +47,22 @@ interface CustomDirectiveDecorator {
         [key: string]: string;
     };
     bindings?: any[];
-    providers?: any[];
     exportAs?: string;
     queries?: {
         [key: string]: any;
     };
+    platform?: PlatformProperties;
 }
 
-export function Component(metadata: CustomComponentDecorator) {
+export interface Metadata extends PlatformComponentDecorator, PlatformDirectiveDecorator { }
+
+export function Component(metadata: PlatformComponentDecorator) {
     return function (cls: any) {
         return Decorator.annotateComponent(cls, metadata);
     }
 }
 
-export function Directive(metadata: CustomDirectiveDecorator) {
+export function Directive(metadata: PlatformDirectiveDecorator) {
     return function (cls: any) {
         return Decorator.annotateDirective(cls, metadata);
     }
