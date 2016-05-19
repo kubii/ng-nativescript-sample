@@ -34,46 +34,79 @@ $ live-server
 
 Navigate to app/index.html.
 
-<h2>3. Workflow</h2>
+<h2>3. Code sharing between platforms</h2>
 
-3.1 Create a new page:
+We need to use a custom angular decorators:
+```
+util/Component.ts
+```
 
-- create new folder in app/pages (pagename)
-- you need to add these files to that folder:
- - pagename.android.css: style for android
- - pagename.ios.css: style for ios
- - pagename.common.css: style for android and ios
- - pagename.web.css: style for web
- - pagename.component.ts: angular component for the page
- - pagename.mobile.html: view for android and ios
- - pagename.web.html: view for web
-- configure router (app.component.ts)
-- notes about pagename.component.ts configuration:
- - templateUrl should point to the html file without "mobile.html" or "web.html" suffix
- - styleUrls should point to the css file without "android.css", "common.css", "ios.css" or "web.css" suffix
+This decorator can accept a second parameter. This parameter contains the platform specific information.
+Example:
 
-3.2 Write new util what can't be reused in web and mobile but has the same "api" (example: router)
+app.component.ts:
+```
+import {Component} from './util/Component';
+import {PlatformMetadata} from './app.metadata';
 
-- create a ts file without any prefix (app/util/router.ts) - this will contain the mobile implementation
-- create a ts file with the same name but with web suffix - this will contain the web implementation
-- map the module in app/systemjs.config.js
+@Component({
+    selector: "my-app",
+    providers: [LoginService]
+}, PlatformMetadata)
+export class App { }
+```
 
+app.metadata.ts:
+```
+import {NS_ROUTER_DIRECTIVES, NS_ROUTER_PROVIDERS} from "nativescript-angular/router";
+
+let PlatformMetadata = {
+    templateUrl: 'app.mobile.html',
+    styleUrls: [
+        'app.common.css',
+        'app.css'
+    ],
+    directives: [NS_ROUTER_DIRECTIVES],
+    providers: [NS_ROUTER_PROVIDERS]
+};
+
+export { PlatformMetadata }
+```
+
+In the PlatformMetadata we can define platform specific directives, providers, styleUrls and templateUrl. We can define the common things with the first parameter of the decorator.
+
+But how to define the web platform? First we need to map the "app.metadata" component. Add this map info the "system.config.js" file:
 ```
 ...
 map: {
-   './util/route': './util/route.web.js'
+    ...
+    './app.metadata': './app.metadata.web.js',
+    ...
 }
+...
 ```
 
-- import the module without ".web" suffix (.../util/router)
+After that we can create "app.metadata.web.ts" file and define the web specific information:
+```
+import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from "@angular/router-deprecated";
 
-<h2>4. How does it work</h2>
+let PlatformMetadata = {
+    templateUrl: 'app.web.html',
+    styleUrls: ['app.web.css'],
+    directives: [ROUTER_DIRECTIVES],
+    providers: [ROUTER_PROVIDERS]
+};
 
-How does it know which html/css to import?
+export { PlatformMetadata }
+```
 
-A custom Component and Directive decorator is implemented in app/util/Component.ts. This decorator will replace the urls using the Url module implemented in app/util/url.ts. This is the mobile implementation. The web implementation can be found in app/util/url.web.ts. In systemjs.config.js a map is created to load url.web.js instead of url.js. We are using the same approach in 3.2.
+With this map approach we can create platform specific utils, services, etc. The camera util is an example:
+- Create "camera.ts" and "camera.web.ts" files and implement these.
+- Import "camera.ts" where you need to use it.
+- Map to "camera.web.ts" in "systemjs.config.js"
+- It should "implements the same interface".  
 
-<h2>5. References</h2>
+<h2>4. References</h2>
 
 http://angularjs.blogspot.hu/2016/03/code-reuse-in-angular-2-native-mobile.html
 
