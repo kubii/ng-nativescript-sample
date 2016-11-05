@@ -3,6 +3,8 @@ One codebase for mobile and web with NativeScript and Angular2 (sample).
 
 This sample demonstrates a way how to create a project for web and mobile with one codebase.
 
+**Note: It's outdated. It hasn't been updated to the final Angular version. The project still uses rc1 for now.**
+
 <h2>1. Prerequisites</h2>
 
 https://angular.io/docs/ts/latest/quickstart.html
